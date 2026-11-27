@@ -1,37 +1,87 @@
 # PrepTrack
 
-PrepTrack is a free, offline-first study-session and mock-test tracker. It runs in a modern browser and stores records locally on the device.
+**An offline-first study and mock-test tracker.**
+
+PrepTrack is a lightweight, browser-based application designed to help students organize study sessions, record mock-test results, and monitor their learning progress.
+
+It works directly in your browser and stores data locally, so you can use it without creating an account or depending on a backend server.
+
+## Live Demo
+
+[Open PrepTrack](https://binit005.github.io/preptrack/)
 
 ## Features
 
-- Log study sessions by subject, date, duration and notes.
-- Record mock tests, correct/wrong answers and optional score.
-- View study totals and average mock accuracy.
-- Export a JSON backup and import it later.
-- Download study-session and mock-test CSV files.
-- Delete individual records.
-- No account, server, analytics or third-party runtime dependencies.
+- **Study Session Tracking:** Record study sessions and track time spent studying.
+- **Mock Test History:** Save mock-test scores and performance details.
+- **Performance Summary:** View study and test statistics.
+- **Accuracy Calculation:** Monitor your correct and incorrect answers.
+- **Data Backup:** Export your data as JSON.
+- **CSV Export:** Download records for further analysis.
+- **Offline-first:** Uses browser local storage without requiring a server.
 
-## Run locally
+## Getting Started
 
-1. Download or clone this repository.
-2. Open `index.html` in a modern browser.
-3. Start adding sessions and mock tests.
+You can use PrepTrack directly through the live demo.
 
-For a local development server, run `python -m http.server 8000` from the project directory and open `http://localhost:8000`.
+To run it locally:
 
-## Privacy and data
+1. Clone this repository:
 
-Records are stored in the browser's `localStorage`. They are not automatically uploaded anywhere. Clearing browser data can erase records, so use **Export backup** regularly. Do not import a backup from an untrusted source.
+   ```bash
+   git clone https://github.com/Binit005/preptrack.git
+   ```
 
-## Project status
+2. Open the project folder.
+3. Open `index.html` in your web browser.
 
-This is an initial community release. It has not yet been independently audited or tested across every browser/device combination. Please report reproducible bugs with browser and operating-system details.
+No installation or build process is required.
+
+## Data and Privacy
+
+PrepTrack stores your records in your browser's local storage.
+
+- Your records are not uploaded to a PrepTrack server.
+- Data is associated with the browser and device you use.
+- Clearing browser storage may delete your records.
+- Export your data regularly to keep a backup.
+
+## Technology
+
+- HTML
+- CSS
+- JavaScript
+- Browser Local Storage
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Bug reports, accessibility improvements, documentation and translations are welcome.
+Contributions, suggestions, and bug reports are welcome.
 
-## Licence
+If you want to contribute:
 
-MIT. See [LICENSE](LICENSE).
+1. Fork this repository.
+2. Create a new branch for your changes.
+3. Make your changes and test them.
+4. Submit a pull request with a clear explanation.
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
+
+## Roadmap
+
+Some possible future improvements:
+
+- Improved study analytics.
+- Subject-wise performance tracking.
+- More detailed progress visualizations.
+- Improved accessibility and mobile experience.
+- Additional data backup options.
+
+See [ROADMAP.md](docs/ROADMAP.md) for project plans.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+**Built to make consistent learning easier to track.**
