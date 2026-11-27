@@ -10,13 +10,13 @@ It works directly in your browser and stores data locally, so you can use it wit
 
 [Open PrepTrack](https://binit005.github.io/preptrack/)
 
-## Features## Screenshots
+## Features## ## Screenshots
 
 ### Dashboard
-![PrepTrack Dashboard](screenshots/v.jpg)
+![PrepTrack Dashboard](screenshots/v.JPG)
 
 ### Mock Test Tracking
-![PrepTrack Mock Test](screenshots/v2.jpg)
+![PrepTrack Mock Test](screenshots/v1.JPG)
 
 - **Study Session Tracking:** Record study sessions and track time spent studying.
 - **Mock Test History:** Save mock-test scores and performance details.
