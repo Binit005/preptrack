@@ -58,7 +58,8 @@ function renderSubjectSummary() {
       </div>
     </div>`;
   }).join("");
-}$("studyForm").addEventListener("submit", e => {
+
+$("studyForm").addEventListener("submit", e => {
   e.preventDefault();
   const f = new FormData(e.currentTarget);
 
@@ -104,6 +105,7 @@ $("mockForm").addEventListener("submit", e => {
   e.currentTarget.reset();
   e.currentTarget.elements.date.value = today;
 });
+
 
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-delete]");
