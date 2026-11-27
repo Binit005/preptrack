@@ -58,9 +58,7 @@ function renderSubjectSummary() {
       </div>
     </div>`;
   }).join("");
-}
-
-$("studyForm").addEventListener("submit", e => {
+}$("studyForm").addEventListener("submit", e => {
   e.preventDefault();
   const f = new FormData(e.currentTarget);
 
