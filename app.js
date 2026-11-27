@@ -18,23 +18,46 @@
     const attempted = Number(m.correct) + Number(m.wrong);
     return attempted ? (Number(m.correct) / attempted) * 100 : 0;
   };
-  function render() {
-    $("sessionCount").textContent = data.sessions.length;
-    $("studyHours").textContent = (data.sessions.reduce((s,x)=>s+Number(x.minutes),0)/60).toFixed(1);
-    $("mockCount").textContent = data.mocks.length;
-    $("avgAccuracy").textContent = data.mocks.length ? (data.mocks.reduce((s,m)=>s+accuracy(m),0)/data.mocks.length).toFixed(1)+"%" : "—";
-    renderList("sessions", data.sessions, "session");
-    renderList("mocks", data.mocks, "mock");
+ 
+function render() {
+  $("sessionCount").textContent = data.sessions.length;
+  $("studyHours").textContent = (data.sessions.reduce((s,x)=>s+Number(x.minutes),0)/60).toFixed(1);
+  $("mockCount").textContent = data.mocks.length;
+  $("avgAccuracy").textContent = data.mocks.length ? (data.mocks.reduce((s,m)=>s+accuracy(m),0)/data.mocks.length).toFixed(1)+"%" : "—";
+
+  renderList("sessions", data.sessions, "session");
+  renderList("mocks", data.mocks, "mock");
+  renderSubjectSummary();
+}
+
+function renderSubjectSummary() {
+  const node = $("subjectSummary");
+
+  const subjects = {};
+
+  data.sessions.forEach(session => {
+    const subject = (session.subject || "Unspecified").trim() || "Unspecified";
+    subjects[subject] = (subjects[subject] || 0) + Number(session.minutes || 0);
+  });
+
+  const sorted = Object.entries(subjects).sort((a, b) => b[1] - a[1]);
+
+  if (!sorted.length) {
+    node.className = "entries empty";
+    node.textContent = "No study data yet.";
+    return;
   }
-  function renderList(id, rows, type) {
-    const node = $(id);
-    if (!rows.length) { node.className="entries empty"; node.textContent = type==="session" ? "No sessions yet." : "No mock tests yet."; return; }
-    node.className="entries";
-    node.innerHTML = rows.slice().reverse().slice(0,8).map(row => {
-      const title = type==="session" ? row.subject : row.test;
-      const detail = type==="session" ? `${row.minutes} min · ${row.notes || "No notes"}` : `${row.correct} correct · ${row.wrong} wrong · ${accuracy(row).toFixed(1)}% accuracy${row.score!=="" ? " · Score "+row.score : ""}`;
-      return `<div class="entry"><div><strong>${safe(title)}</strong><small>${safe(row.date)} · ${safe(detail)}</small></div><button type="button" data-delete="${safe(row.id)}" data-type="${type}" aria-label="Delete ${safe(title)}">Delete</button></div>`;
-    }).join("");
+
+  node.className = "entries";
+  node.innerHTML = sorted.map(([subject, minutes]) => {
+    const hours = (minutes / 60).toFixed(1);
+    return `<div class="entry">
+      <div><strong>${safe(subject)}</strong>
+      <small>${hours} hours (${minutes} minutes)</small></div>
+    </div>`;
+  }).join("");
+}
+
   }
   $("studyForm").addEventListener("submit", e => {
     e.preventDefault(); const f = new FormData(e.currentTarget);
