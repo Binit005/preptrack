@@ -10,7 +10,7 @@ It works directly in your browser and stores data locally, so you can use it wit
 
 [Open PrepTrack](https://binit005.github.io/preptrack/)
 
-## Features## ## Screenshots
+## Features## - **Subject-wise Study Analytics:** View total study time grouped by subject, sorted by time spent. ## Screenshots
 
 ### Dashboard
 ![PrepTrack Dashboard](screenshots/v.JPG)
@@ -81,6 +81,7 @@ Some possible future improvements:
 - More detailed progress visualizations.
 - Improved accessibility and mobile experience.
 - Additional data backup options.
+- [x] Subject-wise study-time summaries.
 
 See [ROADMAP.md](docs/ROADMAP.md) for project plans.
 
