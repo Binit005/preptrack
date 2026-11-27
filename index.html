@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A private, offline-first study and mock-test tracker.">
+  <title>PrepTrack — Study & Mock Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><p class="eyebrow">OPEN-SOURCE STUDY TOOL</p><h1>PrepTrack</h1><p class="sub">Plan your study. Track your mocks. Learn from every attempt.</p></div>
+    <div class="actions"><button id="exportBtn" class="secondary">Export backup</button><label class="button secondary" for="importFile">Import backup</label><input id="importFile" type="file" accept="application/json" hidden></div>
+  </header>
+  <main>
+    <section class="stats" aria-label="Summary">
+      <article><span>Study sessions</span><strong id="sessionCount">0</strong></article>
+      <article><span>Study hours</span><strong id="studyHours">0</strong></article>
+      <article><span>Mock tests</span><strong id="mockCount">0</strong></article>
+      <article><span>Average accuracy</span><strong id="avgAccuracy">—</strong></article>
+    </section>
+    <div class="layout">
+      <section class="panel">
+        <h2>Log a study session</h2>
+        <form id="studyForm">
+          <label>Subject<input name="subject" maxlength="60" required placeholder="e.g. Mathematics"></label>
+          <div class="two"><label>Date<input name="date" type="date" required></label><label>Minutes<input name="minutes" type="number" min="1" max="1440" required placeholder="60"></label></div>
+          <label>What did you study?<textarea name="notes" maxlength="500" rows="3" placeholder="Topics, chapters or tasks"></textarea></label>
+          <button type="submit">Add session</button>
+        </form>
+      </section>
+      <section class="panel">
+        <h2>Log a mock test</h2>
+        <form id="mockForm">
+          <label>Test name<input name="test" maxlength="80" required placeholder="e.g. Weekly Mock 01"></label>
+          <div class="two"><label>Date<input name="date" type="date" required></label><label>Total questions<input name="total" type="number" min="1" required></label></div>
+          <div class="two"><label>Correct<input name="correct" type="number" min="0" required></label><label>Wrong<input name="wrong" type="number" min="0" required></label></div>
+          <label>Score (optional)<input name="score" type="number" step="0.01" placeholder="e.g. 62.5"></label>
+          <button type="submit">Add mock</button>
+        </form>
+        <p class="hint">Accuracy is calculated as correct ÷ attempted × 100.</p>
+      </section>
+    </div>
+    <div class="layout lists">
+      <section class="panel"><div class="section-head"><h2>Recent study sessions</h2><button id="studyCsv" class="text-button">Download CSV</button></div><div id="sessions" class="entries empty">No sessions yet.</div></section>
+      <section class="panel"><div class="section-head"><h2>Mock-test history</h2><button id="mockCsv" class="text-button">Download CSV</button></div><div id="mocks" class="entries empty">No mock tests yet.</div></section>
+    </div>
+    <p class="privacy">Your records stay in this browser unless you export and share a backup. Clearing browser storage may erase them.</p>
+  </main>
+  <footer>PrepTrack is free, open-source software. <a href="https://github.com/" rel="noreferrer">GitHub</a> publication is a separate step.</footer>
+  <script src="app.js"></script>
+</body>
+</html>
