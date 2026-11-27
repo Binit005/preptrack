@@ -30,9 +30,9 @@ function render() {
   renderSubjectSummary();
 }
 
+
 function renderSubjectSummary() {
   const node = $("subjectSummary");
-
   const subjects = {};
 
   data.sessions.forEach(session => {
@@ -52,34 +52,81 @@ function renderSubjectSummary() {
   node.innerHTML = sorted.map(([subject, minutes]) => {
     const hours = (minutes / 60).toFixed(1);
     return `<div class="entry">
-      <div><strong>${safe(subject)}</strong>
-      <small>${hours} hours (${minutes} minutes)</small></div>
+      <div>
+        <strong>${safe(subject)}</strong>
+        <small>${hours} hours (${minutes} minutes)</small>
+      </div>
     </div>`;
   }).join("");
 }
 
+$("studyForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = new FormData(e.currentTarget);
+
+  data.sessions.push({
+    id: crypto.randomUUID(),
+    subject: f.get("subject").trim(),
+    date: f.get("date"),
+    minutes: Number(f.get("minutes")),
+    notes: f.get("notes").trim()
+  });
+
+  save();
+  render();
+  e.currentTarget.reset();
+  e.currentTarget.elements.date.value = today;
+});
+
+$("mockForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = new FormData(e.currentTarget);
+
+  const total = Number(f.get("total"));
+  const correct = Number(f.get("correct"));
+  const wrong = Number(f.get("wrong"));
+
+  if (correct + wrong > total) {
+    alert("Correct + wrong cannot exceed total questions.");
+    return;
   }
-  $("studyForm").addEventListener("submit", e => {
-    e.preventDefault(); const f = new FormData(e.currentTarget);
-    data.sessions.push({id:crypto.randomUUID(),subject:f.get("subject").trim(),date:f.get("date"),minutes:Number(f.get("minutes")),notes:f.get("notes").trim()});
-    save(); render(); e.currentTarget.reset(); e.currentTarget.elements.date.value=today;
+
+  data.mocks.push({
+    id: crypto.randomUUID(),
+    test: f.get("test").trim(),
+    date: f.get("date"),
+    total,
+    correct,
+    wrong,
+    score: f.get("score")
   });
-  $("mockForm").addEventListener("submit", e => {
-    e.preventDefault(); const f = new FormData(e.currentTarget);
-    const total=Number(f.get("total")), correct=Number(f.get("correct")), wrong=Number(f.get("wrong"));
-    if (correct+wrong>total) { alert("Correct + wrong cannot exceed total questions."); return; }
-    data.mocks.push({id:crypto.randomUUID(),test:f.get("test").trim(),date:f.get("date"),total,correct,wrong,score:f.get("score")});
-    save(); render(); e.currentTarget.reset(); e.currentTarget.elements.date.value=today;
-  });
-  document.addEventListener("click", e => {
-    const b=e.target.closest("[data-delete]"); if(!b)return;
-    const key=b.dataset.type==="session"?"sessions":"mocks";
-    data[key]=data[key].filter(x=>x.id!==b.dataset.delete); save(); render();
-  });
-  function download(name, content, type) {
-    const url=URL.createObjectURL(new Blob([content],{type}));
-    const a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);
-  }
+
+  save();
+  render();
+  e.currentTarget.reset();
+  e.currentTarget.elements.date.value = today;
+});
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-delete]");
+  if (!b) return;
+
+  const key = b.dataset.type === "session" ? "sessions" : "mocks";
+  data[key] = data[key].filter(x => x.id !== b.dataset.delete);
+
+  save();
+  render();
+});
+
+function download(name, content, type) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
   $("exportBtn").addEventListener("click",()=>download("preptrack-backup.json",JSON.stringify(data,null,2),"application/json"));
   $("importFile").addEventListener("change",async e=>{
     const file=e.target.files[0]; if(!file)return;
